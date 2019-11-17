@@ -201,11 +201,14 @@ def main():
     net.add_optimizer(hparams,global_step)
 
 
-
     run_metadata = tf.RunMetadata()
 
+    sess_config = tf.ConfigProto(log_device_placement=False)    # log_device_placement=False --> cpu/gpu 자동 배치.
+    sess_config.gpu_options.allow_growth=True   # GPU VRAM 제한 해제
+
     # Set up session
-    sess = tf.Session(config=tf.ConfigProto(log_device_placement=False))  # log_device_placement=False --> cpu/gpu 자동 배치.
+    #sess = tf.Session(config=sess_config) as sess:
+    sess = tf.Session(config=sess_config)  
     init = tf.global_variables_initializer()
     sess.run(init)
     
